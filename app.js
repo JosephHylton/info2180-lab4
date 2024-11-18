@@ -9,24 +9,49 @@
 //     });
 // };
 
-//making an AJAX request
-const httpReq = new XMLHttpRequest();
-let url = "http://localhost/info2180-lab4/superheroes.php";
-httpReq.onreadystatechange = searchList;
-httpReq.open('GET', url);
-httpReq.send();
+window.onload = function(){
 
-//handling the response to an AJAX request
-function searchList(){
-    if (httpReq.readyState===XMLHttpRequest.DONE){
-        if (httpReq.status === 200){
-            let response = httpReq.responseText;
-            alert(response);
-        } else {
-            alert('There was a problem with the request');
+    const searchBtn = document.querySelector('#btn');
+    var httpReq;
+
+    searchBtn.addEventListener('click', function(elements){
+
+        elements.preventDefault();
+
+        //making an AJAX request
+        httpReq = new XMLHttpRequest();
+        const search = document.querySelector('#search').value;
+        let url = "http://localhost/info2180-lab4/superheroes.php?query=";//"superheroes.php?query= http://localhost/info2180-lab4/superheroes.php";
+        httpReq.onreadystatechange = searchList;
+        httpReq.open('GET', url+search, true);
+        httpReq.send();
+        console.log(search);
+    });
+
+    
+
+    //handling the response to an AJAX request
+    function searchList(){
+
+        const result = document.querySelector('#result');
+        
+
+        if (httpReq.readyState === XMLHttpRequest.DONE){
+            if (httpReq.status === 200){
+                let response = httpReq.responseText;
+                console.log(response);
+                result.innerHTML = response;
+                //alert(response);
+            } else {
+                alert('There was a problem with the request');
+            }
         }
     }
-}
+
+};
+
+
+
 
 
 
