@@ -68,16 +68,20 @@ $superheroes = [
   ], 
 ];
 
-$search = filter_input(INPUT_GET,'query',FILTER_SANITIZE_STRING);
-$found = false;
+$search = filter_input(INPUT_GET,'query',FILTER_SANITIZE_STRING); //Initializes the search bar to search the array for what was entered.
+$found = false; //initializes found to false.
 
 ?>
 
 <ul>
+
+    <!-- Checks if the query is empty and reveals the list of searchable superheroes. -->
     <?php if ($search == ''): ?>
         <?php foreach ($superheroes as $superhero): ?>
             <li><?= $superhero['alias']; ?></li>
         <?php endforeach; ?>
+
+    <!-- Else for each superhero, if the alias or name is entered and found, display their alias, name and biography. -->
     <?php else: ?>
         <?php foreach ($superheroes as $superhero): ?>
             <?php if ($search == $superhero['alias'] || $search == $superhero['name']): ?>
@@ -88,6 +92,7 @@ $found = false;
             <?php endif ?>
         <?php endforeach ?>
 
+        <!-- Checks if what was entered was not found to display "Superhero Not Found" in red font colour. -->
         <?php if ($found == false): ?>
             <p style="color: red; font-weight: bold;">Superhero Not Found</p>
         <?php endif ?>
